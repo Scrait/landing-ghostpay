@@ -1,27 +1,25 @@
-# Стадия сборки
-FROM node:18-alpine AS builder
+# Используем production-оптимизированный образ
+FROM node:20-alpine as builder
+
+WORKDIR /app
+COPY . .
+
+RUN npm install --frozen-lockfile
+RUN npm run build
+
+# Production image
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Копируем package.json и устанавливаем зависимости
-COPY package*.json ./
-RUN npm install
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/next.config.ts ./next.config.ts
 
-# Копируем исходники и собираем проект
-COPY . .
-RUN npm run build
+ENV NODE_ENV=production
 
-# Стадия с Nginx для обслуживания сборки
-FROM nginx:stable-alpine
+EXPOSE 3000
 
-# Копируем собранный фронтенд в директорию Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Копируем конфиг Nginx (позже добавим)
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Открываем порт 80
-EXPOSE 80
-
-# Запускаем Nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npx", "next", "start"]

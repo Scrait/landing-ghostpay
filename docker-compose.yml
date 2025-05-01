@@ -1,6 +1,37 @@
 services:
-  react-app:
-    build: .
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
+    container_name: nginx-proxy
     ports:
       - "80:80"
-    restart: unless-stopped
+      - "443:443"
+    volumes:
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: acme-companion
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=scrait558@gmail.com
+    restart: always
+
+  nextjs_app:
+    build:
+      context: .
+    container_name: nextjs_app
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=ghost-pay.run
+      - LETSENCRYPT_HOST=ghost-pay.run
+      - LETSENCRYPT_EMAIL=scrait558@gmail.com
+    restart: always

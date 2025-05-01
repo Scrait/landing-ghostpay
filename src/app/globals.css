@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --neon-blue: #00FFFF;
-  --neon-purple: #8A2BE2;
-  --neon-green: #00FF7F;
-  --dark-bg: #0A0A0F;
+  --neon-blue: #00ffff;
+  --neon-purple: #8a2be2;
+  --neon-green: #00ff7f;
+  --dark-bg: #0a0a0f;
   --card-bg: rgba(16, 16, 32, 0.6);
 }
 
@@ -19,37 +19,46 @@
 body {
   background-color: var(--dark-bg);
   color: white;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   overflow-x: hidden;
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Orbitron", sans-serif;
   }
 }
 
 @layer components {
   .glow-text-blue {
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+      0 0 20px rgba(0, 255, 255, 0.5);
   }
-  
+
   .glow-text-purple {
-    text-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.7),
+      0 0 20px rgba(138, 43, 226, 0.5);
   }
-  
+
   .glow-text-green {
-    text-shadow: 0 0 10px rgba(0, 255, 127, 0.7), 0 0 20px rgba(0, 255, 127, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 127, 0.7),
+      0 0 20px rgba(0, 255, 127, 0.5);
   }
 
   .glow-border-blue {
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
   }
-  
+
   .glow-border-purple {
-    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5), 0 0 20px rgba(138, 43, 226, 0.3);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5),
+      0 0 20px rgba(138, 43, 226, 0.3);
   }
-  
+
   .glow-border-green {
     box-shadow: 0 0 10px rgba(0, 255, 127, 0.5), 0 0 20px rgba(0, 255, 127, 0.3);
   }
@@ -60,12 +69,12 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
   }
-  
+
   .ghost-button {
     position: relative;
     background: transparent;
     color: white;
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     padding: 12px 32px;
     border: 1px solid var(--neon-blue);
     border-radius: 8px;
@@ -73,9 +82,9 @@ body {
     transition: all 0.3s ease;
     z-index: 1;
   }
-  
+
   .ghost-button::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -85,12 +94,12 @@ body {
     z-index: -1;
     transition: width 0.3s ease;
   }
-  
+
   .ghost-button:hover {
     color: var(--dark-bg);
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
   }
-  
+
   .ghost-button:hover::before {
     width: 100%;
   }
